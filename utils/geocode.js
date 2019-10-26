@@ -1,24 +1,23 @@
 const request = require('request');
 const geocode = (address, callback) => {
-	const mapboxUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
+	const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
 		address
 	)}.json?access_token=${process.env.MAPBOX_API_KEY}&limit=1`;
-	request.get({ url: mapboxUrl, json: true }, (error, response) => {
+	request.get({ url, json: true }, (error, { body }) => {
 		if (error) {
 			callback('Unable to connect to geocoding service!');
-		} else if (response.body.features.length == 0) {
+		} else if (body.features.length == 0) {
 			callback('Unable to find location, try another!');
 		} else {
-			const location = response.body.features[0];
+			const [ location ] = body.features;
 			const { place_name, center } = location;
 			const [ longitude, latitude ] = center;
-			const locationData = {
+			// No error
+			callback(undefined, {
 				location: place_name,
 				latitude: latitude,
 				longitude: longitude
-			};
-			// No error
-			callback(undefined, locationData);
+			});
 		}
 	});
 };

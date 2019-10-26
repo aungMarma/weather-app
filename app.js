@@ -11,11 +11,10 @@ const rl = readline.createInterface({
 });
 
 rl.question("What's your address? ", (address) => {
-	geocode(address, (error, geocodeData) => {
+	geocode(address, (error, { latitude, longitude, location }) => {
 		if (error) {
 			console.log('Error', error);
 		} else {
-			const { latitude, longitude, location } = geocodeData;
 			forecast(latitude, longitude, (error, forecastData) => {
 				if (error) {
 					console.log('Error', error);
