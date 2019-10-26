@@ -10,7 +10,7 @@ const rl = readline.createInterface({
 	output: process.stdout
 });
 
-rl.question("What's your address?", (address) => {
+rl.question("What's your address? ", (address) => {
 	geocode(address, (error, geocodeData) => {
 		if (error) {
 			console.log('Error', error);
@@ -20,8 +20,8 @@ rl.question("What's your address?", (address) => {
 				if (error) {
 					console.log('Error', error);
 				} else {
-					console.log('Location:', location);
-					console.log('Forecast:', forecastData);
+					console.log(chalk.green('Location: ' + location));
+					console.log(chalk.blue('Forecast: ' + forecastData));
 				}
 			});
 		}
