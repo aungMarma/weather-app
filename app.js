@@ -29,6 +29,8 @@ request.get({ url: urlGeocode, json: true }, (error, response) => {
 		const { place_name, center } = address;
 		const latitude = center[1];
 		const longitude = center[0];
+		console.log(place_name, center);
+
 		// get weather info with the coordinates
 		const url = urlDarksky + latitude + ',' + longitude;
 		request.get({ url: url, json: true }, (error, response) => {
